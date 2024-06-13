@@ -1,0 +1,15 @@
+#This docker-compose will create specified image
+#It will run all the specified tests
+#It will copy the test results to local system from container
+
+version: '3.8'   #docker-compose latest version
+services:         #actions that docker-compose will perform
+  playwright-test:  #name the service
+    image: playwright-test  #name the image
+    build:                  #since the image does not pre-exist, we need to build it
+      context: .            #build in the root location (.)
+      dockerfile: ./Dockerfile  #build using all the steps mentioned the dockerfile
+    command: npm run pageObjects-chrome #run the tests
+    volumes:                #storage
+      - ./playwright-report/:/app/playwright-report #copy playwright-report to host location from container location 
+      - ./test-results/:/app/test-results #copy test-report to host location from container location 
